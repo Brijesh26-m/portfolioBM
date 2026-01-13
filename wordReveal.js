@@ -19,8 +19,15 @@ const DPR = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.5);
 /* =========================
    VANTA CLOUDS (OPTIMIZED)
 ========================= */
+/* =========================
+   VANTA CLOUDS – FULL QUALITY (ALL DEVICES)
+========================= */
 (function () {
-  if (!document.getElementById("vanta-clouds-bg")) return;
+  const el = document.getElementById("vanta-clouds-bg");
+  if (!el) return;
+
+  const isMobile = window.innerWidth <= 768;
+  const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
 
   const threeScript = document.createElement("script");
   threeScript.src = "https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js";
@@ -33,9 +40,10 @@ const DPR = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.5);
   document.head.appendChild(threeScript);
 
   function initVanta() {
-    VANTA.CLOUDS({
-      el: "#vanta-clouds-bg",
-      mouseControls: !isMobile,
+    const effect = VANTA.CLOUDS({
+      el: el,
+
+      mouseControls: !isMobile,   // disable heavy mouse tracking on phones
       touchControls: true,
       gyroControls: false,
 
@@ -51,11 +59,18 @@ const DPR = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.5);
       sunGlareColor: 0x000000,
       sunlightColor: 0x000000,
 
-      speed: isMobile ? 0.25 : isTablet ? 0.35 : 0.5,
-      zoom: isMobile ? 0.65 : isTablet ? 0.8 : 0.9
+      speed: isMobile ? 0.45 : isTablet ? 0.48 : 0.5,  // same visual motion
+      zoom:  isMobile ? 0.9  : isTablet ? 0.9  : 0.9   // SAME scale everywhere
     });
+
+    // Force full resolution rendering (no mobile blur)
+    if (effect && effect.renderer) {
+      effect.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    }
   }
 })();
+
+
 
 /* =========================
    PARTICLES (OPTIMIZED)
