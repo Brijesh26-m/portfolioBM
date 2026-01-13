@@ -31,7 +31,7 @@
     mouseControls: true,
     touchControls: true,
     gyroControls: false,
-    backgroundColor: 0x140a28,
+    backgroundColor: 0x000000,
 
     // Brand neon colors
     color: 0x45e3ff,       // cyan
