@@ -78,3 +78,31 @@
 }
 
 })();
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector('.feedback-btn');
+  if (!btn) return;
+
+  btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const name = document.querySelector('input[placeholder="Your Name"]')?.value || "";
+    const email = document.querySelector('input[placeholder="Your Email"]')?.value || "";
+    const subjectField = document.querySelector('input[placeholder="Subject"]')?.value || "";
+    const message = document.querySelector('textarea')?.value || "";
+
+    const subject = encodeURIComponent(subjectField || "New Message from Portfolio");
+    const body = encodeURIComponent(
+      `Name: ${name}\n` +
+      `Email: ${email}\n` +
+      `Subject: ${subjectField}\n\n` +
+      `Message:\n${message}`
+    );
+
+    const mailtoLink = `mailto:brijeshmy26@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
+  });
+});
